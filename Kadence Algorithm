@@ -1,8 +1,6 @@
+**CASE-1 To find the sum of contiguous subarray within a one-dimensional array of numbers which has the largest sum.**
 
-
-# Algoithm
-
-## SOLUTION
+**SOLUTION**
 class Solution {
     public int maxSubArray(int[] nums) {
         int max = nums[0];
@@ -12,5 +10,39 @@ class Solution {
             max = Math.max(max, maxsofar);
         }
         return max;
+    }
+}
+
+**CASE-2 [EXTENSION OF KADANCE ALGO] Maximum Sum Circular Subarray**
+Given a circular array C of integers represented by A, find the maximum possible sum of a non-empty subarray of C.
+
+HINTS:
+1.For those of you who are familiar with the Kadane's algorithm, think in terms of that. For the newbies, Kadane's algorithm is used to finding the maximum sum subarray from a given array. This problem is a twist on that idea and it is advisable to read up on that algorithm first before starting this problem. Unless you already have a great algorithm brewing up in your mind in which case, go right ahead!
+2.What is an alternate way of representing a circular array so that it appears to be a straight array? Essentially, there are two cases of this problem that we need to take care of. Let's look at the figure below to understand those two cases:
+
+3.The first case can be handled by the good old Kadane's algorithm. However, is there a smarter way of going about handling the second case as well?
+
+**Solution**
+
+class Solution {
+    public int maxSubarraySumCircular(int[] A) {
+        int total=0;
+        int max_end_here=0;
+        int min_end_here=0;
+        
+        int max_sum=Integer.MIN_VALUE;
+        int min_sum=Integer.MAX_VALUE;
+       
+        for(int x: A){
+            total+=x;
+            max_end_here=Math.max(max_end_here+x,x);
+            max_sum=Math.max(max_sum,max_end_here);
+            min_end_here=Math.min(min_end_here+x,x);
+            min_sum=Math.min(min_end_here,min_sum);
+        }
+        if(max_sum>0)
+            return Math.max(max_sum,total-min_sum);
+        else
+            return max_sum;
     }
 }
